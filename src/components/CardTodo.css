@@ -1,0 +1,60 @@
+.card-todo {
+  width: 100%;
+  height: 220px;
+  border-radius: 32px;
+  gap: 6.9px;
+  opacity: 1;
+  border-width: 1px;
+  padding: 24px;
+  background-color: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  margin-top: 2rem;
+}
+
+.wrapper-tag-todo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tag-todo {
+  border-radius: 50px;
+  color: #8b53bd;
+  background-color: #f1e9fe;
+  width: fit-content;
+  height: 23px;
+  padding: 4px 12px 4px 12px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: 1px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.title-todo {
+  font-family: Inter;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  margin-top: 1.2rem;
+  color: #1e293b;
+}
+
+.desc-todo {
+  word-wrap: break-word;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  line-height: 22.75px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #64748b;
+  margin-top: 0.5rem;
+}

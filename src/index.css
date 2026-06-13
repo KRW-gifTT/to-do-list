@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(
+    122.71% 172.56% at 0% 0%,
+    #f1e9fe 0%,
+    #ffffff 50%,
+    #f8f4ff 100%
+  );
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}

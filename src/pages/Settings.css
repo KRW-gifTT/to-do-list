@@ -1,5 +1,4 @@
 #settings {
-  width: calc(100% - 256px);
   padding: 24px;
 }
 
@@ -93,6 +92,12 @@
   flex-direction: column;
   gap: 2rem;
   margin-bottom: 2rem;
+}
+
+.wrapper-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #profile {

@@ -39,7 +39,9 @@ const App = () => {
           onSelect={({ key }) => navigate(key)}
         />
       </div>
-      <Outlet />
+      <div className="wrapper-outlet">
+        <Outlet />
+      </div>
     </div>
   );
 };

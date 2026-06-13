@@ -2,10 +2,35 @@ import "./Settings.css";
 import { Bell, KeyRound, User, Palette, ShieldCheck } from "lucide-react";
 import avatar from "../assets/image/avatar.jpg";
 import { Switch } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProfileAppbar from "../components/ProfileAppbar";
 
-export default function Settings({ activeSection }) {
+export default function Settings() {
+  const [activeSection, setActiveSection] = useState("");
+
+  useEffect(() => {
+    const sections = document.querySelectorAll("section");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.6,
+      },
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const [isOn, setIsOn] = useState(false);
   const onChange = (checked) => {
     console.log(`switch to ${checked}`);
@@ -31,7 +56,7 @@ export default function Settings({ activeSection }) {
       </div>
 
       <div className="wrapper-content">
-        <div className="menu-settings">
+        {/* <div className="menu-settings">
           <a
             className={activeSection === "profile" ? "active" : ""}
             href="#profile"
@@ -61,10 +86,10 @@ export default function Settings({ activeSection }) {
             <ShieldCheck size={18} />
             Security
           </a>
-        </div>
+        </div> */}
 
         <div className="container">
-          <div id="profile">
+          <section id="profile">
             <div className="wrapper-personal">
               <div className="personal-profile">Personal Profile</div>
               <button className="btn-save">Save Changes</button>
@@ -111,10 +136,10 @@ export default function Settings({ activeSection }) {
               <div className="header-infor">BIO</div>
               <input className="field-bio" type="text" placeholder="Your Bio" />
             </div>
-          </div>
+          </section>
 
           <div className="wrapper-noti-app">
-            <div id="notifications">
+            <section id="notifications">
               <div className="header">Notifications</div>
               <div className="wrapper-details">
                 <div className="details">
@@ -151,8 +176,8 @@ export default function Settings({ activeSection }) {
                   </div>
                 </div>
               </div>
-            </div>
-            <div id="appearance">
+            </section>
+            <section id="appearance">
               <div className="header">Appearance</div>
               <div className="theme-selection">Theme Selection</div>
               <div className="theme-color">
@@ -175,10 +200,10 @@ export default function Settings({ activeSection }) {
                   <div className="theme-name">Dark</div>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
 
-          <div id="security">
+          <section id="security">
             <div className="header">Security & Privacy</div>
             <div className="box-pass">
               <div className="box-box">
@@ -193,7 +218,7 @@ export default function Settings({ activeSection }) {
 
               <button className="btn-pass">Change Password</button>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>

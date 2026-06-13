@@ -58,3 +58,9 @@
 .wrapper-sidebar {
   display: flex;
 }
+
+.wrapper-outlet {
+  height: 100vh;
+  width: calc(100% - 255px);
+  overflow: scroll;
+}

@@ -122,3 +122,13 @@
   font-weight: 700;
   font-size: 14px;
 }
+
+.dot-icon {
+  display: flex;
+  align-items: center;
+}
+
+.tag-priority {
+  border-radius: 18px;
+  padding: 0 12px;
+}

@@ -1,44 +1,113 @@
 import "./Settings.css";
-import { Bell, KeyRound, User, Palette, ShieldCheck } from "lucide-react";
-import avatar from "../assets/image/avatar.jpg";
-import { Switch } from "antd";
-import { useState, useEffect } from "react";
+import { Bell, KeyRound, X } from "lucide-react";
+import { Switch, notification, Modal, Form, Input, Button } from "antd";
+import React from "react";
 import ProfileAppbar from "../components/ProfileAppbar";
+import * as AuthService from "../services/auth.service";
+import * as ProfileService from "../services/profile.service";
 
 export default function Settings() {
-  const [activeSection, setActiveSection] = useState("");
+  const [loading, setLoading] = React.useState(true);
+  const [profile, setProfile] = React.useState({
+    name: "",
+    email: "",
+    bio: "",
+    avatar_url: "",
+  });
 
-  useEffect(() => {
-    const sections = document.querySelectorAll("section");
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        threshold: 0.6,
-      },
-    );
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
-    return () => observer.disconnect();
-  }, []);
-
-  const [isOn, setIsOn] = useState(false);
+  const [isOn, setIsOn] = React.useState(false);
   const onChange = (checked) => {
     console.log(`switch to ${checked}`);
     setIsOn(checked);
   };
 
+  const getMyProfile = async () => {
+    setLoading(true);
+    try {
+      const res = await AuthService.getMyProfile();
+      setProfile({
+        name: res.data.data.name || "",
+        email: res.data.data.email || "",
+        bio: res.data.data.bio || "",
+        avatar_url: res.data.data.avatar_url || "",
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getMyProfile();
+  }, []);
+
+  const updateProfile = async () => {
+    setLoading(true);
+    try {
+      await ProfileService.updateProfile(profile);
+      openNotificationWithIcon(
+        "success",
+        "Success",
+        "Your profile has been changed.",
+      );
+    } catch (error) {
+      openNotificationWithIcon("error", "Error", "Save failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title, desc) => {
+    api[type]({
+      title: title,
+      description: desc,
+      placement: "bottomRight",
+    });
+  };
+
+  const onChangePassword = async (values) => {
+    if (values.new_password !== values.confirm_new_password) {
+      openNotificationWithIcon("error", "Oops!", "Password mismatch.");
+      return;
+    }
+    setLoading(true);
+
+    try {
+      const res = await AuthService.changePassword(values);
+      if (res) {
+        openNotificationWithIcon(
+          "success",
+          "Success",
+          "Password changed successfully.",
+        );
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      openNotificationWithIcon("error", "Oops!", error.response.data.message);
+      console.log(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const onChangePasswordFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
     <div id="settings">
+      {contextHolder}
       <div className="header-setting">
         <input
           className="text-field"
@@ -56,58 +125,32 @@ export default function Settings() {
       </div>
 
       <div className="wrapper-content">
-        {/* <div className="menu-settings">
-          <a
-            className={activeSection === "profile" ? "active" : ""}
-            href="#profile"
-          >
-            <User size={18} />
-            Profile
-          </a>
-
-          <a
-            className={activeSection === "notifications" ? "active" : ""}
-            href="#notifications"
-          >
-            <Bell size={18} />
-            Notifications
-          </a>
-          <a
-            className={activeSection === "appearance" ? "active" : ""}
-            href="#appearance"
-          >
-            <Palette size={18} />
-            Appearance
-          </a>
-          <a
-            className={activeSection === "security" ? "active" : ""}
-            href="#security"
-          >
-            <ShieldCheck size={18} />
-            Security
-          </a>
-        </div> */}
-
         <div className="container">
           <section id="profile">
             <div className="wrapper-personal">
               <div className="personal-profile">Personal Profile</div>
-              <button className="btn-save">Save Changes</button>
+              <button className="btn-save" onClick={updateProfile}>
+                {loading ? "Loading..." : "Save Changes"}
+              </button>
             </div>
 
             <div className="wrapper-avatar">
               <div className="wrapper-pic">
-                <img className="pic" src={avatar} alt="avatar" />
+                <img className="pic" src={profile.avatar_url} alt="avatar" />
               </div>
 
               <div className="wrapper-name">
-                <div className="name">Korawan Phuwiang</div>
+                <div className="name">{profile.name}</div>
                 <div className="message">
                   Update your photo and personal details here.
                 </div>
                 <input
                   className="change-avatar"
                   placeholder="Insert avatar url"
+                  defaultValue={profile.avatar_url}
+                  onChange={(e) =>
+                    setProfile({ ...profile, avatar_url: e.target.value })
+                  }
                 ></input>
               </div>
             </div>
@@ -119,6 +162,10 @@ export default function Settings() {
                   className="field-name"
                   type="text"
                   placeholder="Yourname"
+                  defaultValue={profile.name}
+                  onChange={(e) =>
+                    setProfile({ ...profile, name: e.target.value })
+                  }
                 />
               </div>
 
@@ -128,13 +175,25 @@ export default function Settings() {
                   className="field-name"
                   type="text"
                   placeholder="Your Email"
+                  defaultValue={profile.email}
+                  onChange={(e) =>
+                    setProfile({ ...profile, email: e.target.value })
+                  }
                 />
               </div>
             </div>
 
             <div className="wrapper-bio">
               <div className="header-infor">BIO</div>
-              <input className="field-bio" type="text" placeholder="Your Bio" />
+              <textarea
+                className="field-bio"
+                type="text"
+                placeholder="Your Bio"
+                defaultValue={profile.bio}
+                onChange={(e) =>
+                  setProfile({ ...profile, bio: e.target.value })
+                }
+              />
             </div>
           </section>
 
@@ -216,7 +275,128 @@ export default function Settings() {
                 </div>
               </div>
 
-              <button className="btn-pass">Change Password</button>
+              <button className="btn-pass" onClick={showModal}>
+                Change Password
+              </button>
+              <Modal
+                className="changepass-modal"
+                title={
+                  <div className="wrapper-title-changepass">
+                    <div className="title-changepass">
+                      <div className="icon-key">
+                        <KeyRound fill="#9966CC" color="#F1E9FE" size={24} />
+                      </div>
+                      Change Password
+                    </div>
+
+                    <div className="wrapper-btn-X">
+                      <Button
+                        className="btn-X"
+                        shape="circle"
+                        onClick={handleCancel}
+                      >
+                        <X size={14} color="#64748B" />
+                      </Button>
+                    </div>
+                  </div>
+                }
+                open={isModalOpen}
+                // onOk={handleOk}
+                // onCancel={handleCancel}
+                closeIcon={null}
+                width={425}
+                footer={null}
+              >
+                <div className="desc-changepass">
+                  Your new password must be at least 8 characters long and
+                  include a mix of letters, numbers, and symbols.
+                </div>
+                <Form
+                  className="wrapper-change-password-form"
+                  name="basic"
+                  layout="horizontal"
+                  initialValues={{ remember: true }}
+                  onFinish={onChangePassword}
+                  onFinishFailed={onChangePasswordFailed}
+                  autoComplete="off"
+                >
+                  <Form.Item
+                    className="change-password-form-item wrapper-button-form"
+                    label="Current Password"
+                    layout="vertical"
+                    name="current_password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      className="input-field-password"
+                      placeholder="••••••••••••"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    className="change-password-form-item wrapper-button-form"
+                    label="New Password"
+                    layout="vertical"
+                    name="new_password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your new password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      className="input-field-password"
+                      placeholder="••••••••••••"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    className="change-password-form-item wrapper-button-form"
+                    label="Confirm New Password"
+                    layout="vertical"
+                    name="confirm_new_password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please confirm your new password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      className="input-field-password"
+                      placeholder="••••••••••••"
+                    />
+                  </Form.Item>
+
+                  <Form.Item label={null} className="wrapper-button-form">
+                    <Button
+                      className="btn-update-password"
+                      type="primary"
+                      htmlType="submit"
+                      block
+                      loading={loading}
+                    >
+                      Update Password
+                    </Button>
+
+                    <Button
+                      className="btn-cancel-password"
+                      block
+                      loading={loading}
+                      variant="outlined"
+                      onClick={handleCancel}
+                    >
+                      Cancel
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Modal>
             </div>
           </section>
         </div>

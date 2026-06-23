@@ -1,4 +1,4 @@
-import { Bell, Plus } from "lucide-react";
+import { Bell, Plus, Ellipsis, Dot } from "lucide-react";
 import "./MyTasks.css";
 import { Flex, Space, Table, Tag } from "antd";
 import ProfileAppbar from "../components/ProfileAppbar";
@@ -8,27 +8,36 @@ const columns = [
     title: "TASKNAME",
     dataIndex: "taskname",
     key: "taskname",
-    render: (text) => <a>{text}</a>,
+    render: (text, { priority }) => {
+      const color = {
+        low: "#64748B",
+        medium: "#8B53BD",
+        high: "#EF4444",
+      };
+      return (
+        <div className="dot-icon">
+          <Dot size={40} color={color[priority.toLowerCase()]} />
+          {text}
+        </div>
+      );
+    },
   },
   {
     title: "PIORITY",
     dataIndex: "priority",
     key: "priority",
-    render: (_, { tags }) => (
-      <Flex gap="small" align="center" wrap>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "kawaii") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </Flex>
-    ),
+    render: (text) => {
+      const color = {
+        low: "#64748B",
+        medium: "#8B53BD",
+        high: "#EF4444",
+      };
+      return (
+        <Tag className="tag-priority" color={color[text.toLowerCase()]}>
+          {text.toUpperCase()}
+        </Tag>
+      );
+    },
   },
   {
     title: "DUE DATE",
@@ -37,42 +46,55 @@ const columns = [
   },
   {
     title: "STATUS",
-    key: "status",
     dataIndex: "status",
+    key: "status",
+    render: (text) => {
+      const color = {
+        TODO: "#CBD5E1",
+        IN_PROGRESS: "#60A5FA",
+        DONE: "#10B981",
+      };
+      const label = {
+        TODO: "To Do",
+        IN_PROGRESS: "In Progress",
+        DONE: "Done",
+      };
+      return (
+        <div className="dot-icon">
+          <Dot size={40} color={color[text]} />
+          {label[text]}
+        </div>
+      );
+    },
   },
   {
     title: "",
     key: "action",
-    render: (_, record) => (
-      <Space size="medium">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
+    render: () => <Ellipsis color="#CBD5E1" />,
   },
 ];
 
 const data = [
   {
     key: "1",
-    taskname: "John Brown",
-    priority: 32,
+    taskname: "Create Brand Palette",
+    priority: "low",
     date: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
+    status: "IN_PROGRESS",
   },
   {
     key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["kawaii"],
+    taskname: "Draft User Journey",
+    priority: "medium",
+    date: "London No. 1 Lake Park",
+    status: "TODO",
   },
   {
     key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
+    taskname: "Sidebar Implementation",
+    priority: "high",
+    date: "Sydney No. 1 Lake Park",
+    status: "DONE",
   },
 ];
 

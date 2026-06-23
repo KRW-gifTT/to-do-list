@@ -167,6 +167,11 @@
   font-size: 14px;
   letter-spacing: -0.49%;
   text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background-color: #bda0da;
+  }
 }
 
 .wrapper-avatar {
@@ -238,8 +243,6 @@
   border-radius: 16px;
   border: 1px solid #f1f5f9;
   padding: 12px 20px 12px 20px;
-  color: #ffffff80;
-
   font-weight: 500;
   font-size: 14px;
   margin-top: 0.7rem;
@@ -255,7 +258,6 @@
   border-radius: 16px;
   border: 1px solid #f1f5f9;
   padding: 12px 20px;
-  color: #ffffff80;
 
   font-weight: 500;
   font-size: 14px;
@@ -333,6 +335,12 @@
   color: #475569;
   border: 1px solid #e2e8f0;
   background-color: #ffffff;
+
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background-color: #e2e8f0;
+  }
 }
 
 .wrapper-details {
@@ -440,8 +448,108 @@
 .change-avatar {
   border-radius: 6px;
   border: 2px solid #f1f5f9;
-  color: #ffffff80;
   margin-top: 7px;
   padding: 2px 8px;
   font-size: 12px;
+}
+
+.ant-modal .ant-modal-container {
+  border-radius: 32px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wrapper-change-password-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100% !important;
+}
+
+.change-password-form-item label {
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 12px !important;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #94a3b8 !important;
+}
+
+.btn-update-password {
+  height: 51px;
+  border-radius: 16px;
+  padding: 14px 0px;
+  margin-top: 1rem;
+  box-shadow: 0px 4px 12px 0px #9966cc4d;
+}
+
+.btn-cancel-password {
+  height: 51px;
+  padding: 0 14px;
+  border-radius: 16px;
+  border-width: 1px;
+  margin-top: 0.7rem;
+
+  font-weight: 600;
+  font-style: Semi Bold;
+  font-size: 15px;
+  color: #64748b;
+}
+
+.ant-modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field-password {
+  height: 42px;
+  border-radius: 16px;
+  padding: 12px 20px;
+  background-color: #f1f5f980;
+  border: none;
+}
+
+.desc-changepass {
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 1.5rem;
+}
+
+.wrapper-button-form {
+  width: 100%;
+}
+
+.title-changepass {
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wrapper-title-changepass {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-key {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: #f1e9fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-X {
+  background-color: #f1f5f9;
 }

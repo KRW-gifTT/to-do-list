@@ -1,5 +1,4 @@
 import "./SideBar.css";
-import { useState } from "react";
 import { Menu } from "antd";
 import { LayoutDashboard, ListTodo, Settings, Layers } from "lucide-react";
 import { useNavigate, Outlet, useLocation } from "react-router";

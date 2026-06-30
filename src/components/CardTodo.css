@@ -58,3 +58,14 @@
   color: #64748b;
   margin-top: 0.5rem;
 }
+
+.btn-ellipsis-todo {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: background 0.2s;
+}

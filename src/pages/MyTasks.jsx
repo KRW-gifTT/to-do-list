@@ -1,116 +1,260 @@
-import { Bell, Plus, Ellipsis, Dot } from "lucide-react";
+import { Bell, Plus, Ellipsis, Dot, Calendar } from "lucide-react";
 import "./MyTasks.css";
 import { Button, Table, Tag } from "antd";
 import ProfileAppbar from "../components/ProfileAppbar";
 import Newtasks from "../components/NewTasks";
 import React from "react";
+import * as TasksService from "../services/tasks.service";
+import dayjs from "dayjs";
+import DropdownTask from "../components/DropdownTask";
+import DeleteTask from "../components/DeleteTask";
 
-const columns = [
-  {
-    title: "TASKNAME",
-    dataIndex: "taskname",
-    key: "taskname",
-    render: (text, { priority }) => {
-      const color = {
-        low: "#64748B",
-        medium: "#8B53BD",
-        high: "#EF4444",
-      };
-      return (
-        <div className="dot-icon">
-          <Dot size={40} color={color[priority.toLowerCase()]} />
-          {text}
-        </div>
-      );
-    },
-  },
-  {
-    title: "PIORITY",
-    dataIndex: "priority",
-    key: "priority",
-    render: (text) => {
-      const color = {
-        low: "#64748B",
-        medium: "#8B53BD",
-        high: "#EF4444",
-      };
-      return (
-        <Tag className="tag-priority" color={color[text.toLowerCase()]}>
-          {text.toUpperCase()}
-        </Tag>
-      );
-    },
-  },
-  {
-    title: "DUE DATE",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "STATUS",
-    dataIndex: "status",
-    key: "status",
-    render: (text) => {
-      const color = {
-        TODO: "#CBD5E1",
-        IN_PROGRESS: "#60A5FA",
-        DONE: "#10B981",
-      };
-      const label = {
-        TODO: "To Do",
-        IN_PROGRESS: "In Progress",
-        DONE: "Done",
-      };
-      return (
-        <div className="dot-icon">
-          <Dot size={40} color={color[text]} />
-          {label[text]}
-        </div>
-      );
-    },
-  },
-  {
-    title: "",
-    key: "action",
-    render: () => <Ellipsis color="#CBD5E1" />,
-  },
-];
+// const columns = [
+//   {
+//     title: "TASKNAME",
+//     dataIndex: "title",
+//     key: "title",
+//     render: (text, { priority }) => {
+//       const color = {
+//         low: "#64748B",
+//         medium: "#8B53BD",
+//         high: "#EF4444",
+//       };
+//       return (
+//         <div className="dot-icon">
+//           <Dot size={40} color={color[priority.toLowerCase()]} />
+//           {text}
+//         </div>
+//       );
+//     },
+//   },
+//   {
+//     title: "PIORITY",
+//     dataIndex: "priority",
+//     key: "priority",
+//     render: (text) => {
+//       const color = {
+//         low: "#64748B",
+//         medium: "#8B53BD",
+//         high: "#EF4444",
+//       };
+//       return (
+//         <Tag className="tag-priority" color={color[text.toLowerCase()]}>
+//           {text.toUpperCase()}
+//         </Tag>
+//       );
+//     },
+//   },
+//   {
+//     title: "DUE DATE",
+//     dataIndex: "due_date",
+//     key: "due_date",
+//     render: (text) => {
+//       return (
+//         <div className="icon-calender">
+//           <Calendar size={14} color="#94A3B8" />
+//           {dayjs(text).format("MMM D, YYYY")}
+//         </div>
+//       );
+//     },
+//   },
+//   {
+//     title: "STATUS",
+//     dataIndex: "status",
+//     key: "status",
+//     render: (text) => {
+//       const color = {
 
-const data = [
-  {
-    key: "1",
-    taskname: "Create Brand Palette",
-    priority: "low",
-    date: "New York No. 1 Lake Park",
-    status: "IN_PROGRESS",
-  },
-  {
-    key: "2",
-    taskname: "Draft User Journey",
-    priority: "medium",
-    date: "London No. 1 Lake Park",
-    status: "TODO",
-  },
-  {
-    key: "3",
-    taskname: "Sidebar Implementation",
-    priority: "high",
-    date: "Sydney No. 1 Lake Park",
-    status: "DONE",
-  },
-];
+//         IN_PROGRESS: "#60A5FA",
+//         DONE: "#10B981",
+//       };
+//       const label = {
+
+//         IN_PROGRESS: "In Progress",
+//         DONE: "Done",
+//       };
+//       return (
+//         <div className="dot-icon">
+//           <Dot size={40} color={color[text]} />
+//           {label[text]}
+//         </div>
+//       );
+//     },
+//   },
+//   {
+//     title: "",
+//     key: "action",
+//     render: () => (
+//       <DropdownTask onMenuClick={(e) => console.log("clicked", e.key)}>
+//         <Button
+//           className="btn-ellipsis-todo"
+//           type="link"
+//           onClick={(e) => e.preventDefault()}
+//         >
+//           <Ellipsis size={18} color="#CBD5E1" />
+//         </Button>
+//       </DropdownTask>
+//     ),
+//   },
+// ];
+
+// const data = [
+//   {
+//     key: "1",
+//     taskname: "Create Brand Palette",
+//     priority: "low",
+//     date: "New York No. 1 Lake Park",
+//     status: "IN_PROGRESS",
+//   },
+//   {
+//     key: "2",
+//     taskname: "Draft User Journey",
+//     priority: "medium",
+//     date: "London No. 1 Lake Park",
+//     status: "TODO",
+//   },
+//   {
+//     key: "3",
+//     taskname: "Sidebar Implementation",
+//     priority: "high",
+//     date: "Sydney No. 1 Lake Park",
+//     status: "DONE",
+//   },
+// ];
 
 export default function Mytasks() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
+  const handleSuccess = () => {
+    getTasks();
     setIsModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const [loading, setLoading] = React.useState(false);
+  const [item, setItem] = React.useState([]);
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [selectedTask, setSelectedTask] = React.useState(null);
+
+  const getTasks = async () => {
+    setLoading(true);
+    try {
+      const res = await TasksService.getTask();
+      if (res) {
+        setItem(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getTasks();
+  }, []);
+
+  const handleMenuClick = (key, record) => {
+    if (key === "delete") {
+      setSelectedTask(record);
+      setIsDeleteModalOpen(true);
+    }
+  };
+
+  const handleDeleteSuccess = () => {
+    getTasks();
+    setIsDeleteModalOpen(false);
+    setSelectedTask(null);
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedTask(null);
+  };
+
+  const columns = [
+    {
+      title: "TASKNAME",
+      dataIndex: "title",
+      key: "title",
+      render: (text, { priority }) => {
+        const color = { low: "#64748B", medium: "#8B53BD", high: "#EF4444" };
+        return (
+          <div className="dot-icon">
+            <Dot size={40} color={color[priority.toLowerCase()]} />
+            {text}
+          </div>
+        );
+      },
+    },
+    {
+      title: "PIORITY",
+      dataIndex: "priority",
+      key: "priority",
+      render: (text) => {
+        const color = { low: "#64748B", medium: "#8B53BD", high: "#EF4444" };
+        return (
+          <Tag className="tag-priority" color={color[text.toLowerCase()]}>
+            {text.toUpperCase()}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "DUE DATE",
+      dataIndex: "due_date",
+      key: "due_date",
+      render: (text) => (
+        <div className="icon-calender">
+          <Calendar size={14} color="#94A3B8" />
+          {dayjs(text).format("MMM D, YYYY")}
+        </div>
+      ),
+    },
+    {
+      title: "STATUS",
+      dataIndex: "status",
+      key: "status",
+      render: (text) => {
+        const color = {
+          TODO: "#CBD5E1",
+          IN_PROGRESS: "#60A5FA",
+          DONE: "#10B981",
+        };
+        const label = {
+          TODO: "To Do",
+          IN_PROGRESS: "In Progress",
+          DONE: "Done",
+        };
+        return (
+          <div className="dot-icon">
+            <Dot size={40} color={color[text]} />
+            {label[text]}
+          </div>
+        );
+      },
+    },
+    {
+      title: "",
+      key: "action",
+      render: (_, record) => (
+        <DropdownTask onMenuClick={(e) => handleMenuClick(e.key, record)}>
+          <Button
+            className="btn-ellipsis-todo"
+            type="link"
+            onClick={(e) => e.preventDefault()}
+          >
+            <Ellipsis size={18} color="#CBD5E1" />
+          </Button>
+        </DropdownTask>
+      ),
+    },
+  ];
 
   return (
     <div id="mytask">
@@ -134,7 +278,7 @@ export default function Mytasks() {
         </div>
         <Newtasks
           isModalOpen={isModalOpen}
-          handleOk={handleOk}
+          handleSuccess={handleSuccess}
           handleCancel={handleCancel}
         />
       </div>
@@ -146,8 +290,15 @@ export default function Mytasks() {
         </div>
       </div>
       <div className="table-mytasks">
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={item} />
       </div>
+
+      <DeleteTask
+        isOpen={isDeleteModalOpen}
+        task={selectedTask}
+        onCancel={handleDeleteCancel}
+        onSuccess={handleDeleteSuccess}
+      />
     </div>
   );
 }

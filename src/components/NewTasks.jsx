@@ -10,7 +10,7 @@ import {
 } from "antd";
 import React from "react";
 
-import { Layers, Plus } from "lucide-react";
+import { Layers, Plus, X } from "lucide-react";
 import "./NewTasks.css";
 import * as TasksService from "../services/tasks.service";
 import dayjs from "dayjs";
@@ -77,14 +77,22 @@ export default function Newtasks({ isModalOpen, handleCancel, handleSuccess }) {
       className="modal-container"
       title={
         <div className="box-title-newtasks">
-          <div className="icon-layers">
-            <Layers color="#fff" />
-          </div>
-          <div className="wrapper-title-newtasks">
-            <div className="title-newtasks">New Task</div>
-            <div className="desc-newtasks">
-              Assign a new objective to the project.
+          <div className="container-title-newtasks">
+            <div className="icon-layers">
+              <Layers color="#fff" />
             </div>
+            <div className="wrapper-title-newtasks">
+              <div className="title-newtasks">New Task</div>
+              <div className="desc-newtasks">
+                Assign a new objective to the project.
+              </div>
+            </div>
+          </div>
+
+          <div className="wrapper-btn-close">
+            <Button className="btn-close" shape="circle" onClick={handleCancel}>
+              <X size={14} color="#64748B" />
+            </Button>
           </div>
         </div>
       }

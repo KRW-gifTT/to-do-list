@@ -1,12 +1,12 @@
 import { Dropdown } from "antd";
 import "./DropdownTask.css";
-import { Pencil, Trash2, View } from "lucide-react";
+import { SquarePen, Trash2, View } from "lucide-react";
 
 const items = [
   {
     label: "Edit Task",
     key: "edit",
-    icon: <Pencil size={16} color="#8B53BD" />,
+    icon: <SquarePen size={16} color="#8B53BD" />,
   },
   {
     label: "View Task",

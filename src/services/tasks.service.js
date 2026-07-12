@@ -11,3 +11,7 @@ export const getTask = async () => {
 export const deleteTask = async (id) => {
     return await http.delete(`/api/v1/tasks/${id}`)
 }
+
+export const getTaskById = async (id) => {
+    return await http.get(`/api/v1/tasks/${id}`)
+}

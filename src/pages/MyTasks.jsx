@@ -8,6 +8,7 @@ import * as TasksService from "../services/tasks.service";
 import dayjs from "dayjs";
 import DropdownTask from "../components/DropdownTask";
 import DeleteTask from "../components/DeleteTask";
+import ViewTask from "../components/ViewTask";
 
 // const columns = [
 //   {
@@ -141,6 +142,8 @@ export default function Mytasks() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
   const [selectedTask, setSelectedTask] = React.useState(null);
 
+  const [isViewModalOpen, setIsViewModalOpen] = React.useState(false);
+
   const getTasks = async () => {
     setLoading(true);
     try {
@@ -163,6 +166,9 @@ export default function Mytasks() {
     if (key === "delete") {
       setSelectedTask(record);
       setIsDeleteModalOpen(true);
+    } else if (key === "view") {
+      setSelectedTask(record);
+      setIsViewModalOpen(true);
     }
   };
 
@@ -290,8 +296,14 @@ export default function Mytasks() {
         </div>
       </div>
       <div className="table-mytasks">
-        <Table columns={columns} dataSource={item} />
+        <Table columns={columns} dataSource={item} rowKey="id" />
       </div>
+
+      <ViewTask
+        open={isViewModalOpen}
+        onClose={() => setIsViewModalOpen(false)}
+        task={selectedTask}
+      />
 
       <DeleteTask
         isOpen={isDeleteModalOpen}

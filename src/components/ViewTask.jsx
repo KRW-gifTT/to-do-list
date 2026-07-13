@@ -83,6 +83,7 @@ export default function ViewTask({ open, onClose, task }) {
         initialValues={{ remember: true }}
         autoComplete="off"
         form={form}
+        disabled
       >
         <Form.Item label="Task Name" name="title" className="form-title-view">
           <Input className="input-view" placeholder="Design System Audit" />

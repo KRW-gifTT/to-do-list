@@ -15,3 +15,7 @@ export const deleteTask = async (id) => {
 export const getTaskById = async (id) => {
     return await http.get(`/api/v1/tasks/${id}`)
 }
+
+export const updateTask = async (id, data) => {
+    return await http.put(`/api/v1/tasks/${id}`, data)
+}

@@ -161,6 +161,11 @@ export default function Mytasks() {
     getTasks();
   }, []);
 
+  const showCreateModal = () => {
+    setSelectedTask(null);
+    setIsModalOpen(true);
+  };
+
   const handleMenuClick = (key, record) => {
     if (key === "delete") {
       setSelectedTask(record);
@@ -168,6 +173,9 @@ export default function Mytasks() {
     } else if (key === "view") {
       setSelectedTask(record);
       setIsViewModalOpen(true);
+    } else if (key === "edit") {
+      setSelectedTask(record);
+      setIsModalOpen(true);
     }
   };
 
@@ -273,7 +281,7 @@ export default function Mytasks() {
         <div className="wrapper">
           <div className="wrapper-btn">
             <Bell size={18} color="#64748B" />
-            <button className="btn-newtask" onClick={showModal}>
+            <button className="btn-newtask" onClick={showCreateModal}>
               <Plus size={18} />
               New Task
             </button>
@@ -285,6 +293,7 @@ export default function Mytasks() {
           isModalOpen={isModalOpen}
           handleSuccess={handleSuccess}
           handleCancel={handleCancel}
+          task={selectedTask}
         />
       </div>
 

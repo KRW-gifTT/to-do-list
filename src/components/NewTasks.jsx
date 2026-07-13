@@ -23,7 +23,12 @@ import dayjs from "dayjs";
 
 const { TextArea } = Input;
 
-export default function Newtasks({ isModalOpen, handleCancel, handleSuccess }) {
+export default function Newtasks({
+  isModalOpen,
+  handleCancel,
+  handleSuccess,
+  task,
+}) {
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -38,10 +43,13 @@ export default function Newtasks({ isModalOpen, handleCancel, handleSuccess }) {
     status: "",
     priority: "",
     due_date: "",
+    progress: 0,
   });
   const [loading, setLoading] = React.useState(false);
 
-  const createTask = async () => {
+  const isEditMode = Boolean(task?.id);
+
+  const submitTask = async () => {
     try {
       setLoading(true);
       if (
@@ -55,22 +63,54 @@ export default function Newtasks({ isModalOpen, handleCancel, handleSuccess }) {
         alert("Please fill all the fields");
         return;
       }
-      const res = await TasksService.createTask(newTask);
-      setNewTask({
-        title: "",
-        description: "",
-        category: "",
-        status: "",
-        priority: "",
-        due_date: "",
-      });
+
+      const payload = {
+        ...newTask,
+        due_date: newTask.due_date
+          ? dayjs(newTask.due_date).toISOString()
+          : null,
+        progress: newTask.progress ?? 0,
+      };
+
+      if (isEditMode) {
+        await TasksService.updateTask(task.id, payload);
+      } else {
+        await TasksService.createTask(payload);
+      }
       handleSuccess();
     } catch (error) {
-      console.log(error);
+      console.log("Error status:", error.response?.status);
+      console.log("Error data:", error.response?.data);
+      console.log("Full error:", error);
     } finally {
       setLoading(false);
     }
   };
+
+  React.useEffect(() => {
+    if (isModalOpen) {
+      if (isEditMode) {
+        setNewTask({
+          title: task.title || "",
+          description: task.description || "",
+          category: task.category || "",
+          status: task.status || "",
+          priority: task.priority || "",
+          due_date: task.due_date || "",
+          progress: task.progress ?? 0,
+        });
+      } else {
+        setNewTask({
+          title: "",
+          description: "",
+          category: "",
+          status: "",
+          priority: "",
+          due_date: "",
+        });
+      }
+    }
+  }, [isModalOpen, task]);
 
   return (
     <Modal
@@ -82,9 +122,15 @@ export default function Newtasks({ isModalOpen, handleCancel, handleSuccess }) {
               <Layers color="#fff" />
             </div>
             <div className="wrapper-title-newtasks">
-              <div className="title-newtasks">New Task</div>
+              <div className="title-newtasks">
+                {" "}
+                {isEditMode ? "Edit Task" : "New Task"}
+              </div>
               <div className="desc-newtasks">
-                Assign a new objective to the project.
+                {" "}
+                {isEditMode
+                  ? "Modify the existing objective for the project."
+                  : "Assign a new objective to the project."}
               </div>
             </div>
           </div>
@@ -113,7 +159,7 @@ export default function Newtasks({ isModalOpen, handleCancel, handleSuccess }) {
         <Form.Item
           className="form-taskname"
           label="task name"
-          name="username"
+
           // rules={[
           //   { required: true, message: "Please input your username!" },
           // ]}
@@ -258,10 +304,11 @@ export default function Newtasks({ isModalOpen, handleCancel, handleSuccess }) {
           <Button
             className="btn-create-nt"
             type="primary"
-            onClick={createTask}
+            onClick={submitTask}
             loading={loading}
+            icon={<Plus size={18} />}
           >
-            <Plus size={18} /> Create Task
+            {isEditMode ? "Update Task" : "Create Task"}
           </Button>
         </div>
       </Form>

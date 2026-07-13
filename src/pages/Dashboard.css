@@ -5,7 +5,7 @@
 .kanbanboard {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 40px;
   padding: 10px;
 }
@@ -28,6 +28,7 @@
   font-weight: 400;
   font-size: 14px;
   color: #9ca3af;
+  outline: none;
 }
 
 .btn-newtask {
@@ -171,4 +172,8 @@
     background-color: #ffeaea;
   }
   transition: all 0.2s;
+}
+
+.lane-content {
+  width: 100%;
 }

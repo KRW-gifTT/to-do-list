@@ -129,7 +129,7 @@ export default function Mytasks() {
     setIsModalOpen(true);
   };
   const handleSuccess = () => {
-    getTasks();
+    getTasks({ current: pagination.page, pageSize: pagination.limit });
     setIsModalOpen(false);
   };
   const handleCancel = () => {
@@ -143,12 +143,22 @@ export default function Mytasks() {
   const [selectedTask, setSelectedTask] = React.useState(null);
   const [isViewModalOpen, setIsViewModalOpen] = React.useState(false);
 
-  const getTasks = async () => {
+  const [pagination, setPagination] = React.useState({
+    page: 1,
+    limit: 10,
+    total: 0,
+  });
+
+  const getTasks = async (paginationConfig) => {
     setLoading(true);
     try {
-      const res = await TasksService.getTask();
+      const res = await TasksService.getTask({
+        page: paginationConfig.current,
+        limit: paginationConfig.pageSize,
+      });
       if (res) {
         setItem(res.data.data);
+        setPagination(res.data.pagination);
       }
     } catch (error) {
       console.log(error);
@@ -158,7 +168,7 @@ export default function Mytasks() {
   };
 
   React.useEffect(() => {
-    getTasks();
+    getTasks({ current: pagination.page, pageSize: pagination.limit });
   }, []);
 
   const showCreateModal = () => {
@@ -180,7 +190,7 @@ export default function Mytasks() {
   };
 
   const handleDeleteSuccess = () => {
-    getTasks();
+    getTasks({ current: pagination.page, pageSize: pagination.limit });
     setIsDeleteModalOpen(false);
     setSelectedTask(null);
   };
@@ -304,7 +314,19 @@ export default function Mytasks() {
         </div>
       </div>
       <div className="table-mytasks">
-        <Table columns={columns} dataSource={item} rowKey="id" />
+        <Table
+          columns={columns}
+          dataSource={item}
+          rowKey="id"
+          onChange={getTasks}
+          pagination={{
+            pageSize: 10,
+            total: pagination.total,
+            showSizeChanger: true,
+            pageSizeOptions: [10, 20, 50],
+            showTotal: (total) => `Tasks ${total} Item`,
+          }}
+        />
       </div>
 
       <ViewTask

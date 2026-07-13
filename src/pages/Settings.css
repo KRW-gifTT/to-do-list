@@ -246,6 +246,12 @@
   font-weight: 500;
   font-size: 14px;
   margin-top: 0.7rem;
+  outline: none;
+  transition: 0.3s;
+
+  &:focus {
+    border: 1px solid #9966cc;
+  }
 }
 
 .wrapper-bio {
@@ -264,6 +270,12 @@
   margin-top: 0.7rem;
   text-align: left;
   vertical-align: top;
+  outline: none;
+  transition: 0.3s;
+
+  &:focus {
+    border: 1px solid #9966cc;
+  }
 }
 
 .wrapper-noti-app {
@@ -451,6 +463,12 @@
   margin-top: 7px;
   padding: 2px 8px;
   font-size: 12px;
+  outline: none;
+  transition: 0.3s;
+
+  &:focus {
+    border: 1px solid #9966cc;
+  }
 }
 
 .ant-modal .ant-modal-container {

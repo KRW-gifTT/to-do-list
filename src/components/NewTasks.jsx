@@ -99,6 +99,7 @@ export default function Newtasks({
           due_date: task.due_date || "",
           progress: task.progress ?? 0,
         });
+        console.log(task);
       } else {
         setNewTask({
           title: "",
@@ -108,6 +109,7 @@ export default function Newtasks({
           priority: "",
           due_date: "",
         });
+        console.log(task);
       }
     }
   }, [isModalOpen, task]);

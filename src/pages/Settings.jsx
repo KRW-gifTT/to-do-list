@@ -112,7 +112,7 @@ export default function Settings() {
         <input
           className="text-field"
           type="text"
-          placeholder="Search tasks..."
+          placeholder="Search setting..."
         />
 
         <div className="wrapper">

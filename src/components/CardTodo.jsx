@@ -4,12 +4,13 @@ import { Button } from "antd";
 import DropdownTask from "../components/DropdownTask";
 
 export default function CardTodo(props) {
+  const { handleMenuClick } = props;
   return (
     <div className="card-todo">
       <div className="wrapper-tag-todo">
-        <div className="tag-todo">adada </div>
+        <div className="tag-todo">{props.task?.category}</div>
 
-        <DropdownTask onMenuClick={(e) => console.log("clicked", e.key)}>
+        <DropdownTask onMenuClick={(e) => handleMenuClick(e.key, props.task)}>
           <Button
             className="btn-ellipsis-todo"
             type="link"
@@ -20,8 +21,8 @@ export default function CardTodo(props) {
         </DropdownTask>
       </div>
 
-      <div className="title-todo">sssadadada</div>
-      <p className="desc-todo">daaaaaadadasddddddddddddddddddddddddddd</p>
+      <div className="title-todo">{props.task?.title}</div>
+      <p className="desc-todo">{props.task?.description}</p>
     </div>
   );
 }

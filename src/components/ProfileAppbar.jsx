@@ -7,6 +7,12 @@ import * as AuthService from "../services/auth.service";
 export default function ProfileAppbar() {
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
+  const [profile, setProfile] = React.useState({
+    name: "",
+    email: "",
+    bio: "",
+    avatar_url: "",
+  });
 
   const logout = async () => {
     setLoading(true);
@@ -23,11 +29,31 @@ export default function ProfileAppbar() {
       setLoading(false);
     }
   };
+
+  const getProfile = async () => {
+    setLoading(true);
+    try {
+      const res = await AuthService.getMyProfile();
+      setProfile({
+        name: res.data.data.name,
+        avatar_url: res.data.data.avatar_url,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <>
       <div className="profile">
-        <span className="name-avatar">Korawan</span>
-        <img className="avatar-pic" src={avatar} alt="avatar" />
+        <span className="name-avatar">{profile.name}</span>
+        <img className="avatar-pic" src={profile.avatar_url} alt="avatar" />
       </div>
       <div className="btn-logout" onClick={logout}>
         <LogOut size={20} color="#64748B" />

@@ -141,7 +141,6 @@ export default function Mytasks() {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
   const [selectedTask, setSelectedTask] = React.useState(null);
-
   const [isViewModalOpen, setIsViewModalOpen] = React.useState(false);
 
   const getTasks = async () => {

@@ -16,7 +16,7 @@
   padding: 10px;
 }
 
-.text-field {
+.text-field-dashboard {
   width: 450px;
   height: 56px;
   opacity: 1;
@@ -29,6 +29,13 @@
   font-size: 14px;
   color: #9ca3af;
   outline: none;
+  background-color: #ffffffb2;
+
+  gap: 5px;
+  transition: 0.2ms;
+  &:hover {
+    background-color: #ffffffb2;
+  }
 }
 
 .btn-newtask {

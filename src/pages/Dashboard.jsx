@@ -2,10 +2,10 @@ import "./Dashboard.css";
 import CardTodo from "../components/CardTodo";
 import CardProgress from "../components/CardProgress";
 import CardDone from "../components/CardDone";
-import { Plus, Bell, CirclePlus } from "lucide-react";
+import { Plus, Bell, CirclePlus, Search } from "lucide-react";
 import ProfileAppbar from "../components/ProfileAppbar";
 import Newtasks from "../components/NewTasks";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import React from "react";
 import * as TasksService from "../services/tasks.service";
 import DeleteTask from "../components/DeleteTask";
@@ -105,12 +105,13 @@ export default function Dashboard() {
   return (
     <div id="dashboard">
       <div className="header-dashboard">
-        <input
-          className="text-field"
+        <Input
+          className="text-field-dashboard"
           type="text"
           placeholder="Search tasks..."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          prefix={<Search size={16} color="#94A3B8" />}
         />
 
         <div className="wrapper">

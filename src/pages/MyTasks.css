@@ -8,7 +8,7 @@
   padding: 10px;
 }
 
-.text-field {
+.text-field-mytask {
   width: 450px;
   height: 56px;
   opacity: 1;
@@ -20,6 +20,28 @@
   font-weight: 400;
   font-size: 14px;
   color: #9ca3af;
+  background-color: #ffffffb2;
+
+  gap: 5px;
+  transition: 0.2ms;
+  &:hover {
+    background-color: #ffffffb2;
+  }
+}
+
+.task-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.task-filter-select {
+  width: 140px;
+}
+
+.task-filter-select .ant-select-selector {
+  min-height: 44px !important;
+  border-radius: 12px !important;
 }
 
 .wrapper {
@@ -77,6 +99,22 @@
 .wrapper-header {
   padding: 10px;
   margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-filter-select {
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 14px;
+  letter-spacing: -3.42%;
+}
+
+.select-status-priority {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .header-mytasks {
@@ -140,4 +178,51 @@
   font-size: 14px;
   letter-spacing: -3.71%;
   vertical-align: middle;
+}
+
+.option-status {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.dot-todo,
+.dot-progress,
+.dot-done,
+.dot-low-option,
+.dot-medium-option,
+.dot-high-option {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+}
+
+.dot-todo {
+  background-color: #cbd5e1;
+}
+.dot-progress {
+  background-color: #60a5fa;
+}
+.dot-done {
+  background-color: #10b981;
+}
+.dot-low-option {
+  background-color: #cbd5e1;
+}
+.dot-medium-option {
+  background-color: #9966cc;
+}
+.dot-high-option {
+  background-color: #f87171;
+}
+
+.text-options {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 14px;
+  color: #64748b;
+  gap: 10px;
 }

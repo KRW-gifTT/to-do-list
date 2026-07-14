@@ -5,6 +5,7 @@ import Settings from "../pages/Settings";
 import Sidebar from "../components/SideBar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import NotFoundPage from "../pages/NotFoundPage"
 
 const auth = () => {
     const token = localStorage.getItem("token")
@@ -41,4 +42,8 @@ export default createBrowserRouter([
       },
     ],
   },
+  {
+    path: "*",
+    Component: NotFoundPage
+  }
 ]);

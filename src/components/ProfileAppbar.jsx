@@ -1,5 +1,4 @@
 import { LogOut } from "lucide-react";
-import avatar from "../assets/image/avatar.jpg";
 import { useNavigate } from "react-router";
 import React from "react";
 import * as AuthService from "../services/auth.service";
@@ -24,7 +23,7 @@ export default function ProfileAppbar() {
       localStorage.clear();
       navigate("/");
     } catch (error) {
-      console.error("error");
+      console.error(error);
     } finally {
       setLoading(false);
     }

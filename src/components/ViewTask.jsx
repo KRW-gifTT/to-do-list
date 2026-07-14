@@ -156,15 +156,6 @@ export default function ViewTask({ open, onClose, task }) {
             />
           </Form.Item>
         </div>
-
-        {/* <div className="wrapper-btn-viewtask">
-          <Button className="btn-view-close" onClick={onClose}>
-            Close
-          </Button>
-          <Button type="primary" className="btn-view-edit">
-            <SquarePen /> Edit Task
-          </Button>
-        </div> */}
       </Form>
     </Modal>
   );

@@ -1,25 +1,10 @@
-import {
-  Flex,
-  Space,
-  Modal,
-  Form,
-  Input,
-  Button,
-  DatePicker,
-  Radio,
-} from "antd";
+import { Flex, Modal, Form, Input, Button, DatePicker, Radio } from "antd";
 import React from "react";
 
 import { Layers, Plus, X } from "lucide-react";
 import "./NewTasks.css";
 import * as TasksService from "../services/tasks.service";
 import dayjs from "dayjs";
-
-// const options = [
-//   { label: "Apple", value: "Apple" },
-//   { label: "Pear", value: "Pear" },
-//   { label: "Orange", value: "Orange" },
-// ];
 
 const { TextArea } = Input;
 
@@ -158,14 +143,7 @@ export default function Newtasks({
         autoComplete="off"
         layout="vertical"
       >
-        <Form.Item
-          className="form-taskname"
-          label="task name"
-
-          // rules={[
-          //   { required: true, message: "Please input your username!" },
-          // ]}
-        >
+        <Form.Item className="form-taskname" label="task name">
           <Input
             className="input-taskname"
             placeholder="e.g. Design System Audit"
@@ -206,45 +184,6 @@ export default function Newtasks({
             </Flex>
           </div>
         </div>
-
-        {/* <div className="wrapper-status-prio">
-          <div className="title-name">Status</div>
-          <div className="wrapper-btn-newtasks">
-            <Button className="btn-status">
-              <div className="dot-purple"></div>To Do
-            </Button>
-            <Button className="btn-status">
-              <div className="dot-blue"></div>In Progress
-            </Button>
-            <Button className="btn-status">
-              <div className="dot-green"></div>Done
-            </Button>
-          </div>
-          <Flex vertical gap="medium">
-            <Radio.Group
-              block
-              options={options}
-              defaultValue="Apple"
-              optionType="button"
-              buttonStyle="solid"
-            />
-          </Flex>
-        </div> */}
-
-        {/* <div className="wrapper-status-prio">
-          <div className="title-name">Priority</div>
-          <div className="wrapper-btn-newtasks">
-            <Button className="btn-priority">
-              <div className="dot-low"></div>Low
-            </Button>
-            <Button className="btn-priority">
-              <div className="dot-medium"></div>Medium
-            </Button>
-            <Button className="btn-priority">
-              <div className="dot-high"></div>High
-            </Button>
-          </div>
-        </div> */}
 
         <div className="wrapper-status-prio">
           <div className="title-name">Status</div>

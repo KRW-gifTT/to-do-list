@@ -1,5 +1,5 @@
 import "./Settings.css";
-import { Bell, KeyRound, X } from "lucide-react";
+import { Bell, KeyRound, X, Search } from "lucide-react";
 import { Switch, notification, Modal, Form, Input, Button } from "antd";
 import React from "react";
 import ProfileAppbar from "../components/ProfileAppbar";
@@ -109,10 +109,11 @@ export default function Settings() {
     <div id="settings">
       {contextHolder}
       <div className="header-setting">
-        <input
-          className="text-field"
+        <Input
+          className="text-field-setting"
           type="text"
           placeholder="Search setting..."
+          prefix={<Search size={16} color="#94A3B8" />}
         />
 
         <div className="wrapper">

@@ -1,6 +1,6 @@
-import { Bell, Plus, Ellipsis, Dot, Calendar } from "lucide-react";
+import { Bell, Plus, Ellipsis, Dot, Calendar, Search } from "lucide-react";
 import "./MyTasks.css";
-import { Button, Table, Tag } from "antd";
+import { Button, Select, Table, Tag, Input } from "antd";
 import ProfileAppbar from "../components/ProfileAppbar";
 import Newtasks from "../components/NewTasks";
 import React from "react";
@@ -9,119 +9,6 @@ import dayjs from "dayjs";
 import DropdownTask from "../components/DropdownTask";
 import DeleteTask from "../components/DeleteTask";
 import ViewTask from "../components/ViewTask";
-
-// const columns = [
-//   {
-//     title: "TASKNAME",
-//     dataIndex: "title",
-//     key: "title",
-//     render: (text, { priority }) => {
-//       const color = {
-//         low: "#64748B",
-//         medium: "#8B53BD",
-//         high: "#EF4444",
-//       };
-//       return (
-//         <div className="dot-icon">
-//           <Dot size={40} color={color[priority.toLowerCase()]} />
-//           {text}
-//         </div>
-//       );
-//     },
-//   },
-//   {
-//     title: "PIORITY",
-//     dataIndex: "priority",
-//     key: "priority",
-//     render: (text) => {
-//       const color = {
-//         low: "#64748B",
-//         medium: "#8B53BD",
-//         high: "#EF4444",
-//       };
-//       return (
-//         <Tag className="tag-priority" color={color[text.toLowerCase()]}>
-//           {text.toUpperCase()}
-//         </Tag>
-//       );
-//     },
-//   },
-//   {
-//     title: "DUE DATE",
-//     dataIndex: "due_date",
-//     key: "due_date",
-//     render: (text) => {
-//       return (
-//         <div className="icon-calender">
-//           <Calendar size={14} color="#94A3B8" />
-//           {dayjs(text).format("MMM D, YYYY")}
-//         </div>
-//       );
-//     },
-//   },
-//   {
-//     title: "STATUS",
-//     dataIndex: "status",
-//     key: "status",
-//     render: (text) => {
-//       const color = {
-
-//         IN_PROGRESS: "#60A5FA",
-//         DONE: "#10B981",
-//       };
-//       const label = {
-
-//         IN_PROGRESS: "In Progress",
-//         DONE: "Done",
-//       };
-//       return (
-//         <div className="dot-icon">
-//           <Dot size={40} color={color[text]} />
-//           {label[text]}
-//         </div>
-//       );
-//     },
-//   },
-//   {
-//     title: "",
-//     key: "action",
-//     render: () => (
-//       <DropdownTask onMenuClick={(e) => console.log("clicked", e.key)}>
-//         <Button
-//           className="btn-ellipsis-todo"
-//           type="link"
-//           onClick={(e) => e.preventDefault()}
-//         >
-//           <Ellipsis size={18} color="#CBD5E1" />
-//         </Button>
-//       </DropdownTask>
-//     ),
-//   },
-// ];
-
-// const data = [
-//   {
-//     key: "1",
-//     taskname: "Create Brand Palette",
-//     priority: "low",
-//     date: "New York No. 1 Lake Park",
-//     status: "IN_PROGRESS",
-//   },
-//   {
-//     key: "2",
-//     taskname: "Draft User Journey",
-//     priority: "medium",
-//     date: "London No. 1 Lake Park",
-//     status: "TODO",
-//   },
-//   {
-//     key: "3",
-//     taskname: "Sidebar Implementation",
-//     priority: "high",
-//     date: "Sydney No. 1 Lake Park",
-//     status: "DONE",
-//   },
-// ];
 
 export default function Mytasks() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -138,6 +25,9 @@ export default function Mytasks() {
 
   const [loading, setLoading] = React.useState(false);
   const [item, setItem] = React.useState([]);
+  const [keyword, setKeyword] = React.useState("");
+  const [status, setStatus] = React.useState();
+  const [priority, setPriority] = React.useState();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
   const [selectedTask, setSelectedTask] = React.useState(null);
@@ -155,6 +45,9 @@ export default function Mytasks() {
       const res = await TasksService.getTask({
         page: paginationConfig.current,
         limit: paginationConfig.pageSize,
+        search: keyword.trim() || undefined,
+        status,
+        priority,
       });
       if (res) {
         setItem(res.data.data);
@@ -168,8 +61,12 @@ export default function Mytasks() {
   };
 
   React.useEffect(() => {
-    getTasks({ current: pagination.page, pageSize: pagination.limit });
-  }, []);
+    const timeoutId = setTimeout(() => {
+      getTasks({ current: 1, pageSize: pagination.limit });
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [keyword, status, priority]);
 
   const showCreateModal = () => {
     setSelectedTask(null);
@@ -243,6 +140,7 @@ export default function Mytasks() {
       title: "STATUS",
       dataIndex: "status",
       key: "status",
+
       render: (text) => {
         const color = {
           TODO: "#CBD5E1",
@@ -282,11 +180,16 @@ export default function Mytasks() {
   return (
     <div id="mytask">
       <div className="header-dashboard">
-        <input
-          className="text-field"
-          type="text"
-          placeholder="Search tasks..."
-        />
+        <div className="task-filters">
+          <Input
+            className="text-field-mytask"
+            type="text"
+            placeholder="Search tasks..."
+            value={keyword}
+            onChange={(event) => setKeyword(event.target.value)}
+            prefix={<Search size={16} color="#94A3B8" />}
+          />
+        </div>
 
         <div className="wrapper">
           <div className="wrapper-btn">
@@ -308,9 +211,98 @@ export default function Mytasks() {
       </div>
 
       <div className="wrapper-header">
-        <div className="header-mytasks">My Tasks</div>
-        <div className="des-header">
-          Track and manage your individual contributions.
+        <div className="container-header">
+          <div className="header-mytasks">My Tasks</div>
+          <div className="des-header">
+            Track and manage your individual contributions.
+          </div>
+        </div>
+
+        <div className="select-status-priority">
+          <Select
+            allowClear
+            className="task-filter-select"
+            placeholder="Status All"
+            value={status}
+            onChange={setStatus}
+            options={[
+              {
+                value: "TODO",
+                label: (
+                  <div className="option-status">
+                    <div className="text-options">
+                      <div className="dot-todo" />
+                      To Do
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                value: "IN_PROGRESS",
+                label: (
+                  <div className="option-status">
+                    <div className="text-options">
+                      <div className="dot-progress" />
+                      In Progress
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                value: "DONE",
+                label: (
+                  <div className="option-status">
+                    <div className="text-options">
+                      <div className="dot-done" />
+                      Done
+                    </div>
+                  </div>
+                ),
+              },
+            ]}
+          />
+          <Select
+            allowClear
+            className="task-filter-select"
+            placeholder="Priority All"
+            value={priority}
+            onChange={setPriority}
+            options={[
+              {
+                value: "LOW",
+                label: (
+                  <div className="option-status">
+                    <div className="text-options">
+                      <div className="dot-low-option" />
+                      Low
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                value: "MEDIUM",
+                label: (
+                  <div className="option-status">
+                    <div className="text-options">
+                      <div className="dot-medium-option" />
+                      Medium
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                value: "HIGH",
+                label: (
+                  <div className="option-status">
+                    <div className="text-options">
+                      <div className="dot-high-option" />
+                      High
+                    </div>
+                  </div>
+                ),
+              },
+            ]}
+          />
         </div>
       </div>
       <div className="table-mytasks">
@@ -319,8 +311,10 @@ export default function Mytasks() {
           dataSource={item}
           rowKey="id"
           onChange={getTasks}
+          loading={loading}
           pagination={{
-            pageSize: 10,
+            current: pagination.page,
+            pageSize: pagination.limit,
             total: pagination.total,
             showSizeChanger: true,
             pageSizeOptions: [10, 20, 50],

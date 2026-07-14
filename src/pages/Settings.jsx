@@ -265,13 +265,13 @@ export default function Settings() {
                 </div>
                 <div className="wrapper-pass">
                   <div className="password">Password</div>
-                  <div className="desc-pass">Last changed 3 months ago</div>
+                  <div className="desc-pass">Change your password</div>
                 </div>
               </div>
 
-              <button className="btn-pass" onClick={showModal}>
+              <Button className="btn-pass" onClick={showModal}>
                 Change Password
-              </button>
+              </Button>
               <Modal
                 className="changepass-modal"
                 title={

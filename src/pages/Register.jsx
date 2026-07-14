@@ -1,4 +1,4 @@
-import { Button, Form, Input, notification } from "antd";
+import { Button, Form, Input, message, notification } from "antd";
 import {
   Layers,
   Lock,
@@ -19,7 +19,7 @@ export default function Register() {
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type) => {
     api[type]({
-      title: "Something when wrong",
+      message: "Something when wrong",
       description: "Register failed.",
       placement: "bottomRight",
     });

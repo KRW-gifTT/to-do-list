@@ -151,7 +151,7 @@ export default function Settings() {
 
             <div className="information">
               <div className="wrapper-fullname">
-                <div className="header-infor">FULL NAME</div>
+                <div className="header-infor">USER NAME</div>
                 <Input
                   className="field-name"
                   type="text"

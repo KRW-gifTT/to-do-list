@@ -145,21 +145,21 @@ export default function Settings() {
                 <div className="message">
                   Update your photo and personal details here.
                 </div>
-                <input
+                <Input
                   className="change-avatar"
                   placeholder="Insert avatar url"
                   defaultValue={profile.avatar_url}
                   onChange={(e) =>
                     setProfile({ ...profile, avatar_url: e.target.value })
                   }
-                ></input>
+                ></Input>
               </div>
             </div>
 
             <div className="information">
               <div className="wrapper-fullname">
                 <div className="header-infor">FULL NAME</div>
-                <input
+                <Input
                   className="field-name"
                   type="text"
                   placeholder="Yourname"
@@ -172,7 +172,7 @@ export default function Settings() {
 
               <div className="wrapper-email">
                 <div className="header-infor">EMAIL ADDRESS</div>
-                <input
+                <Input
                   className="field-name"
                   type="text"
                   placeholder="Your Email"

@@ -247,7 +247,7 @@
 .field-name {
   width: 343px;
   height: 42px;
-  border-radius: 16px;
+  border-radius: 10px;
   border: 1px solid #f1f5f9;
   padding: 12px 20px 12px 20px;
   font-weight: 500;
@@ -268,7 +268,7 @@
 .field-bio {
   width: 710px;
   height: 96px;
-  border-radius: 16px;
+  border-radius: 10px;
   border: 1px solid #f1f5f9;
   padding: 12px 20px;
 
@@ -465,7 +465,7 @@
 }
 
 .change-avatar {
-  border-radius: 6px;
+  border-radius: 8px;
   border: 2px solid #f1f5f9;
   margin-top: 7px;
   padding: 2px 8px;

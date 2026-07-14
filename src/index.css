@@ -16,3 +16,28 @@ body {
   font-family: "Inter", sans-serif;
   scroll-behavior: smooth;
 }
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+  #root {
+    zoom: 0.9;
+  }
+
+  .ant-modal {
+    max-width: calc(100vw - 24px) !important;
+    margin: 12px auto;
+  }
+
+  .ant-modal-content {
+    max-width: 100%;
+  }
+}

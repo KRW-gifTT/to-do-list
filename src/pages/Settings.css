@@ -557,3 +557,154 @@
 .btn-X {
   background-color: #f1f5f9;
 }
+
+@media (max-width: 767px) {
+  #settings {
+    padding: 16px;
+  }
+
+  #settings .header-setting {
+    padding: 0;
+  }
+
+  #settings .header-setting .wrapper {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  #settings .wrapper-content {
+    margin-top: 16px;
+    align-items: stretch;
+  }
+
+  #settings .container {
+    width: 100%;
+    gap: 16px;
+    margin-bottom: 0;
+  }
+
+  #settings #profile,
+  #settings #notifications,
+  #settings #appearance,
+  #settings #security {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  #settings .wrapper-personal {
+    align-items: center;
+    gap: 12px;
+  }
+
+  #settings .personal-profile {
+    font-size: 18px;
+  }
+
+  #settings .btn-save {
+    width: auto;
+    min-width: 120px;
+    padding: 0 12px;
+  }
+
+  #settings .wrapper-avatar {
+    align-items: flex-start;
+  }
+
+  #settings .wrapper-pic {
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+    border-radius: 20px;
+  }
+
+  #settings .pic {
+    width: 68px;
+    height: 68px;
+    border-radius: 20px;
+  }
+
+  #settings .wrapper-name {
+    min-width: 0;
+    flex: 1;
+    margin-left: 16px;
+  }
+
+  #settings .message {
+    line-height: 18px;
+  }
+
+  #settings .change-avatar {
+    width: 100%;
+  }
+
+  #settings .information {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  #settings .field-name,
+  #settings .field-bio {
+    width: 100%;
+  }
+
+  #settings .field-bio {
+    min-height: 96px;
+    resize: vertical;
+  }
+
+  #settings .wrapper-noti-app {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  #settings #notifications,
+  #settings #appearance {
+    min-height: 240px;
+  }
+
+  #settings .details {
+    align-items: flex-start;
+  }
+
+  #settings .sub-detail {
+    line-height: 18px;
+  }
+
+  #settings .theme-color {
+    gap: 12px 8px;
+    justify-content: space-around;
+  }
+
+  #settings .white,
+  #settings .amethyst,
+  #settings .dark {
+    width: 80px;
+    height: 56px;
+  }
+
+  #settings .box-pass {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  #settings .btn-pass {
+    width: 100%;
+  }
+
+  .changepass-modal .wrapper-change-password-form {
+    margin-top: 16px;
+  }
+
+  .changepass-modal .title-changepass {
+    gap: 12px;
+    font-size: 18px;
+  }
+
+  .changepass-modal .desc-changepass {
+    line-height: 20px;
+  }
+}

@@ -132,3 +132,38 @@
   text-align: center;
   color: #9966cc;
 }
+
+@media (max-width: 767px) {
+  #login {
+    min-height: 100dvh;
+    height: auto;
+    padding: 92px 16px 24px;
+    align-items: center;
+  }
+
+  #login .header-login {
+    top: 16px;
+    left: 16px;
+  }
+
+  #login .login-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 28px 20px;
+    border-radius: 28px;
+  }
+
+  #login .title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  #login .sub-title {
+    font-size: 14px;
+  }
+
+  #login .text {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

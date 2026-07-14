@@ -276,3 +276,78 @@
 .btn-close {
   background-color: #f1f5f9;
 }
+
+@media (max-width: 767px) {
+  .modal-container .box-title-newtasks,
+  .view-task-modal .view-task-header {
+    gap: 10px;
+  }
+
+  .modal-container .container-title-newtasks,
+  .view-task-modal .view-task-title-container {
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .modal-container .wrapper-title-newtasks,
+  .view-task-modal .view-task-wrapper {
+    min-width: 0;
+  }
+
+  .modal-container .title-newtasks,
+  .view-task-modal .view-task-title {
+    font-size: 18px;
+  }
+
+  .modal-container .desc-newtasks,
+  .view-task-modal .view-task-title-desc {
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  .modal-container .container-fill,
+  .view-task-modal .container-fill {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .modal-container .box-fill,
+  .view-task-modal .form-title-view-task {
+    width: 100%;
+  }
+
+  .modal-container .input-category,
+  .modal-container .custom-date,
+  .view-task-modal .input-view-category,
+  .view-task-modal .custom-date-view {
+    width: 100% !important;
+  }
+
+  .modal-container .wrapper-btn-newtasks,
+  .view-task-modal .wrapper-btn-view {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .modal-container .btn-status,
+  .modal-container .btn-priority,
+  .view-task-modal .btn-status-view {
+    width: calc(50% - 4px);
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .modal-container .btn-buttom,
+  .view-task-modal .wrapper-btn-viewtask {
+    flex-wrap: wrap;
+  }
+
+  .modal-container .btn-cancel-nt,
+  .modal-container .btn-create-nt,
+  .view-task-modal .btn-view-close,
+  .view-task-modal .btn-view-edit {
+    width: auto;
+    flex: 1;
+    padding-inline: 12px;
+  }
+}

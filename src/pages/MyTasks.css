@@ -226,3 +226,121 @@
   color: #64748b;
   gap: 10px;
 }
+
+@media (max-width: 767px) {
+  #mytask {
+    padding: 16px;
+  }
+
+  #mytask .header-dashboard {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+  }
+
+  #mytask .task-filters {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+  }
+
+  #mytask .text-field-mytask {
+    width: 100%;
+    min-width: 0;
+    height: 56px;
+    padding: 18px 16px 18px 44px;
+    border-radius: 18px;
+    font-size: 14px;
+  }
+
+  #mytask .wrapper {
+    display: contents;
+  }
+
+  #mytask .wrapper-btn {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: fit-content;
+    justify-self: end;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  #mytask .wrapper-btn > svg {
+    justify-self: center;
+  }
+
+  #mytask .btn-newtask {
+    width: 108px;
+    height: 48px;
+    flex: 0 0 108px;
+    gap: 4px;
+    padding: 12px;
+    border-radius: 14px;
+    font-size: 12px;
+    justify-content: center;
+  }
+
+  #mytask .profile {
+    grid-column: 2;
+    grid-row: 1;
+    width: auto;
+    height: 48px;
+    flex: none;
+    padding-left: 0;
+    border-left: none;
+    justify-content: flex-start;
+  }
+
+  #mytask .avatar-pic,
+  #mytask .btn-logout {
+    width: 48px;
+    height: 48px;
+  }
+
+  #mytask .name-avatar {
+    font-size: 14px;
+  }
+
+  #mytask .btn-logout {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  #mytask .wrapper-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 0;
+    margin-top: 24px;
+  }
+
+  #mytask .header-mytasks {
+    font-size: 24px;
+  }
+
+  #mytask .select-status-priority {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  #mytask .task-filter-select {
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+  }
+
+  #mytask .table-mytasks {
+    width: 100%;
+    margin-top: 16px;
+    overflow-x: auto;
+  }
+
+  #mytask .table-mytasks .ant-table {
+    min-width: 640px;
+  }
+}

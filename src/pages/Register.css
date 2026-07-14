@@ -118,3 +118,38 @@
   color: #64748b;
   gap: 5px;
 }
+
+@media (max-width: 767px) {
+  #register {
+    min-height: 100dvh;
+    height: auto;
+    padding: 92px 16px 24px;
+    align-items: center;
+  }
+
+  #register .header-register {
+    top: 16px;
+    left: 16px;
+  }
+
+  #register .register-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 28px 20px;
+    border-radius: 28px;
+  }
+
+  #register .title-register {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  #register .sub-title-register {
+    font-size: 14px;
+  }
+
+  #register .text-bottom {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

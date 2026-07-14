@@ -109,13 +109,6 @@ export default function Settings() {
     <div id="settings">
       {contextHolder}
       <div className="header-setting">
-        <Input
-          className="text-field-setting"
-          type="text"
-          placeholder="Search setting..."
-          prefix={<Search size={16} color="#94A3B8" />}
-        />
-
         <div className="wrapper">
           <div className="wrapper-btn">
             <Bell size={18} color="#64748B" />

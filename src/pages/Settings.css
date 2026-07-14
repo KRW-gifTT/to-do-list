@@ -4,29 +4,8 @@
 
 .header-setting {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   padding: 10px;
-}
-
-.text-field-setting {
-  width: 450px;
-  height: 56px;
-  opacity: 1;
-  border-radius: 18px;
-  border: none;
-  border-width: 1px;
-  padding: 18px 24px 18px 56px;
-
-  font-weight: 400;
-  font-size: 14px;
-  color: #9ca3af;
-  background-color: #ffffffb2;
-
-  gap: 5px;
-  transition: 0.2ms;
-  &:hover {
-    background-color: #ffffffb2;
-  }
 }
 
 .wrapper {

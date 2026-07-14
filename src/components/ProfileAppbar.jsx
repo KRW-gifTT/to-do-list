@@ -52,7 +52,13 @@ export default function ProfileAppbar() {
     <>
       <div className="profile">
         <span className="name-avatar">{profile.name}</span>
-        <img className="avatar-pic" src={profile.avatar_url} alt="avatar" />
+        {profile.avatar_url && (
+          <img
+            className="avatar-pic"
+            src={profile.avatar_url || "/default-avatar.png"}
+            alt="avatar"
+          />
+        )}
       </div>
       <div className="btn-logout" onClick={logout}>
         <LogOut size={20} color="#64748B" />

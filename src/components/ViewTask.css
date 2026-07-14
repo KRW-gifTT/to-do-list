@@ -224,3 +224,28 @@
   border-radius: 16px;
   padding: 12px 32px;
 }
+
+@media (max-width: 767px) {
+  .view-task-modal .input-view {
+    height: 44px;
+    padding: 10px 12px;
+  }
+
+  .view-task-modal .input-view-category {
+    height: 42px;
+    padding: 10px 12px;
+  }
+
+  .view-task-modal .custom-date-view .ant-picker {
+    height: 42px;
+  }
+
+  .view-task-modal .custom-date-view .ant-picker-input input {
+    height: 32px !important;
+  }
+
+  .view-task-modal .view-description {
+    height: 80px;
+    padding: 10px 12px;
+  }
+}

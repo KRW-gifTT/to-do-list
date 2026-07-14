@@ -278,6 +278,28 @@
 }
 
 @media (max-width: 767px) {
+  .modal-container .wrapper-form-newtasks {
+    margin-top: 1rem;
+  }
+
+  .modal-container .input-taskname {
+    height: 44px;
+    padding: 10px 12px;
+  }
+
+  .modal-container .input-category {
+    height: 42px;
+    padding: 10px 12px;
+  }
+
+  .modal-container .custom-date .ant-picker {
+    height: 42px;
+  }
+
+  .modal-container .custom-date .ant-picker-input input {
+    height: 32px !important;
+  }
+
   .modal-container .box-title-newtasks,
   .view-task-modal .view-task-header {
     gap: 10px;
@@ -325,16 +347,26 @@
 
   .modal-container .wrapper-btn-newtasks,
   .view-task-modal .wrapper-btn-view {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 0;
   }
 
   .modal-container .btn-status,
   .modal-container .btn-priority,
   .view-task-modal .btn-status-view {
-    width: calc(50% - 4px);
-    flex: 1 1 calc(50% - 4px);
+    width: auto;
+    min-width: 0;
+    flex: 0 1 30%;
+    gap: 4px;
+    padding-inline: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .modal-container .desx-newtasks {
+    height: 80px;
+    padding: 10px 12px;
   }
 
   .modal-container .btn-buttom,
@@ -349,5 +381,9 @@
     width: auto;
     flex: 1;
     padding-inline: 12px;
+  }
+
+  .modal-container .btn-buttom {
+    margin-top: 1rem;
   }
 }

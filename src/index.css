@@ -32,12 +32,23 @@ body {
     zoom: 0.9;
   }
 
+  .ant-modal-wrap {
+    padding: 16px 0;
+    overflow-y: auto;
+  }
+
   .ant-modal {
-    max-width: calc(100vw - 24px) !important;
-    margin: 12px auto;
+    width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    margin: 0 auto;
   }
 
   .ant-modal-content {
     max-width: 100%;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
   }
 }

@@ -707,4 +707,10 @@
   .changepass-modal .desc-changepass {
     line-height: 20px;
   }
+
+  .changepass-modal .input-field-password {
+    height: 38px;
+    padding: 9px 14px;
+    border-radius: 12px;
+  }
 }

@@ -23,6 +23,7 @@ export default function DeleteTask({ isOpen, task, onCancel, onSuccess }) {
   return (
     <Modal
       open={isOpen}
+      centered
       onCancel={onCancel}
       footer={null}
       width={336}

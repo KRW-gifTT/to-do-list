@@ -644,6 +644,16 @@
     border-radius: 20px;
   }
 
+  #settings .avatar-upload {
+    width: 68px;
+    height: 68px;
+    border-radius: 20px;
+  }
+
+  #settings .avatar-overlay {
+    border-radius: 20px;
+  }
+
   #settings .wrapper-name {
     min-width: 0;
     flex: 1;

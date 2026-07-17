@@ -19,11 +19,13 @@
   gap: 42px;
 }
 
-.avatar-pic {
+.avatar-upload {
   border-radius: 16px;
-  width: 48px;
-  height: 48px;
+  width: 96px;
+  height: 96px;
   object-fit: cover;
+  display: flex;
+  justify-content: center;
 }
 
 .name-avatar {
@@ -172,7 +174,6 @@
   border-radius: 28px;
   border-width: 4px;
   background-color: #ffffff01;
-  box-shadow: 0px 2px 4px -2px #0000001a;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -184,6 +185,8 @@
   height: 96px;
   border-width: 4px;
   object-fit: cover;
+  display: flex;
+  justify-content: center;
 }
 
 .wrapper-name {
@@ -556,6 +559,21 @@
 
 .btn-X {
   background-color: #f1f5f9;
+}
+
+.avatar-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.wrapper-pic:hover .avatar-overlay {
+  opacity: 1;
 }
 
 @media (max-width: 767px) {

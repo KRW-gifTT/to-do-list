@@ -1,6 +1,6 @@
 import "./Settings.css";
-import { Bell, KeyRound, X, Search } from "lucide-react";
-import { Switch, notification, Modal, Form, Input, Button } from "antd";
+import { Bell, KeyRound, X, Camera } from "lucide-react";
+import { Switch, notification, Modal, Form, Input, Button, Upload } from "antd";
 import React from "react";
 import ProfileAppbar from "../components/ProfileAppbar";
 import * as AuthService from "../services/auth.service";
@@ -16,6 +16,7 @@ export default function Settings() {
   });
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [uploading, setUploading] = React.useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -35,11 +36,14 @@ export default function Settings() {
     setLoading(true);
     try {
       const res = await AuthService.getMyProfile();
+      console.log(
+        `${import.meta.env.VITE_API_URL}${res.data.data.profile_image_url}`,
+      );
       setProfile({
         name: res.data.data.name || "",
         email: res.data.data.email || "",
         bio: res.data.data.bio || "",
-        avatar_url: res.data.data.avatar_url || "",
+        avatar_url: `${import.meta.env.VITE_API_URL}${res.data.data.profile_image_url}`,
       });
     } catch (error) {
       console.log(error);
@@ -66,6 +70,39 @@ export default function Settings() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAvatarUpload = async ({ file }) => {
+    setUploading(true);
+    try {
+      const result = await ProfileService.uploadProfileImage(file);
+      const newAvatarUrl = `${import.meta.env.VITE_API_URL}${result.data.profile_image_url}`;
+      setProfile((prev) => ({ ...prev, avatar_url: newAvatarUrl }));
+      openNotificationWithIcon("success", "Success", "Avatar updated.");
+    } catch (error) {
+      console.log(error);
+      openNotificationWithIcon("error", "Error", "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const beforeUpload = (file) => {
+    const isImage = file.type.startsWith("image/");
+    if (!isImage) {
+      openNotificationWithIcon(
+        "error",
+        "Error",
+        "อัปโหลดได้เฉพาะไฟล์รูปภาพเท่านั้น",
+      );
+      return Upload.LIST_IGNORE;
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      openNotificationWithIcon("error", "Error", "ขนาดไฟล์ต้องไม่เกิน 2MB");
+      return Upload.LIST_IGNORE;
+    }
+    return true;
   };
 
   const [api, contextHolder] = notification.useNotification();
@@ -130,7 +167,30 @@ export default function Settings() {
 
             <div className="wrapper-avatar">
               <div className="wrapper-pic">
-                <img className="pic" src={profile.avatar_url} alt="avatar" />
+                <Upload
+                  name="image"
+                  showUploadList={false}
+                  customRequest={handleAvatarUpload}
+                  beforeUpload={beforeUpload}
+                  accept="image/*"
+                >
+                  <div
+                    className="avatar-upload"
+                    style={{ position: "relative", cursor: "pointer" }}
+                  >
+                    <img
+                      className="pic"
+                      src={profile.avatar_url || "/default-avatar.png"}
+                      alt="avatar"
+                      onError={(e) => {
+                        e.target.src = "/default-avatar.png";
+                      }}
+                    />
+                    <div className="avatar-overlay">
+                      <Camera size={18} color="#fff" />
+                    </div>
+                  </div>
+                </Upload>
               </div>
 
               <div className="wrapper-name">
@@ -138,14 +198,6 @@ export default function Settings() {
                 <div className="message">
                   Update your photo and personal details here.
                 </div>
-                <Input
-                  className="change-avatar"
-                  placeholder="Insert avatar url"
-                  defaultValue={profile.avatar_url}
-                  onChange={(e) =>
-                    setProfile({ ...profile, avatar_url: e.target.value })
-                  }
-                ></Input>
               </div>
             </div>
 

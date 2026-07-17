@@ -2,6 +2,7 @@ import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router";
 import React from "react";
 import * as AuthService from "../services/auth.service";
+import "./ProfileAppbar.css";
 
 export default function ProfileAppbar() {
   const [loading, setLoading] = React.useState(false);
@@ -35,7 +36,7 @@ export default function ProfileAppbar() {
       const res = await AuthService.getMyProfile();
       setProfile({
         name: res.data.data.name,
-        avatar_url: res.data.data.avatar_url,
+        avatar_url: `${import.meta.env.VITE_API_URL}${res.data.data.profile_image_url}`,
       });
     } catch (error) {
       console.log(error);
@@ -54,8 +55,8 @@ export default function ProfileAppbar() {
         <span className="name-avatar">{profile.name}</span>
         {profile.avatar_url && (
           <img
-            className="avatar-pic"
-            src={profile.avatar_url || "/default-avatar.png"}
+            className="profile-appbar-avatar"
+            src={profile.avatar_url}
             alt="avatar"
           />
         )}
